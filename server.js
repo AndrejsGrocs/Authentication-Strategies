@@ -39,7 +39,7 @@ app.use('/user', userRoutes)
     console.log('connected to the database.');
   })
   .catch((error) => {
-    console.log('database connection error', error);
+    console.log('database connection error.', error);
   });
 
 
