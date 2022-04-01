@@ -53,7 +53,8 @@ app.get('/auth/facebook/authentication-strategies',
     res.redirect('/');
   });
 
-//Github Authentication
+//Github Authentication.
+
 
 passport.use(new githubStrategy ({
     clientID: process.env.CLIENT_ID_GITHUB,
