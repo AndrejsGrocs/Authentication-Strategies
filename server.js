@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const userRoutes = require('./routes/userRoutes')
 const facebookStrategy = require('passport-facebook').Strategy
+const githubStrategy = require('passport-github2').Strategy
+
+
 
 
 
@@ -38,7 +41,7 @@ passport.use(new facebookStrategy({
   }
 ));
 
-
+//Facebook Authentication
 
 app.get('/auth/facebook',
   passport.authenticate('facebook'));
@@ -49,6 +52,33 @@ app.get('/auth/facebook/authentication-strategies',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
+
+//Github Authentication
+
+passport.use(new githubStrategy ({
+    clientID: process.env.CLIENT_ID_GITHUB,
+    clientSecret: process.env.CLIENT_SECRET_GITHUB,
+    callbackURL: "http://localhost:3001/auth/github/authentication-strategies"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+
+
+app.get('/auth/github',
+  passport.authenticate('github', { scope: [ 'profile' ] }));
+
+app.get('/auth/github/authentication-strategies', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
 
  mongoose
   .connect(

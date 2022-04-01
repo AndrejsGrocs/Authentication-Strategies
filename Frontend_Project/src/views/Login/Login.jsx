@@ -16,7 +16,10 @@ export default function Login(){
       e.preventDefault();
       window.location.href='http://localhost:3001/auth/facebook/authentication-strategies';
       }}>Facebook</button>
-         <button>Startegy 2</button>
+         <button className='sectionButton1' type="button" onClick={(e) => {
+      e.preventDefault();
+      window.location.href='http://localhost:3001/auth/github/authentication-strategies';
+      }}>Github</button>
          <button>Startegy 3</button>
 
 
